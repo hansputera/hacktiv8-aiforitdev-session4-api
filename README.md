@@ -1,4 +1,4 @@
-# Hacktiv8 Session 4 Submission (Backend)
+# Hacktiv8 Session 4 Submission (Backend + Frontend)
 
 Here's my original code to do submission on session 4 Hacktiv8 Maju Bersama AI Programe
 

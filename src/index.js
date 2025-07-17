@@ -3,6 +3,7 @@ import { Hono } from 'hono/quick';
 import { cors } from 'hono/cors';
 import { zValidator } from '@hono/zod-validator';
 import consola from 'consola';
+import { serveStatic } from '@hono/node-server/serve-static';
 
 import { configEnv } from './config/index.js';
 import { chatValidator } from './validators/chatValidator.js';
@@ -27,6 +28,11 @@ app.post('/api/chat', zValidator('json', chatValidator), async ctx => {
         reply: result.text,
     });
 });
+
+// Serve static files
+app.use('*', serveStatic({
+    root: './public',
+}));
 
 
 // Handle 500 Errors

@@ -11,10 +11,26 @@ form.addEventListener('submit', function (e) {
   appendMessage('user', userMessage);
   input.value = '';
 
-  // Simulasi dummy balasan bot (placeholder)
-  setTimeout(() => {
-    appendMessage('bot', 'Gemini is thinking... (this is dummy response)');
-  }, 1000);
+  // Send user message to the backend API
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ message: userMessage }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.reply) {
+        appendMessage('bot', data.reply);
+      } else {
+        appendMessage('bot', 'Error: Could not get a response from the server.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      appendMessage('bot', 'Error: Could not connect to the server.');
+    });
 });
 
 function appendMessage(sender, text) {
